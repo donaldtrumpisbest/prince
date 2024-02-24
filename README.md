@@ -1,2 +1,91 @@
-# prince
-im prince:) &lt;3
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Draggable Messages</title>
+<style>
+    body {
+        background-color: #ffccd5; /* deeper pink background */
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .draggable {
+        position: absolute;
+        cursor: grab;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        background-image: url('https://www.transparenttextures.com/patterns/paper.png'); /* wrinkled paper texture */
+        background-size: auto; /* adjust background size */
+        text-align: center; /* center text */
+    }
+</style>
+</head>
+<body>
+
+<div class="draggable" id="message1" draggable="true" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    hello manahil babuuu.
+</div>
+
+<div class="draggable" id="message2" draggable="true" style="top: 60%; left: 60%; transform: translate(-50%, -50%);">
+   mujhe hotwheels kab dila rhi ho aap🥹!
+</div>
+
+<div class="draggable" id="message3" draggable="true" style="top: 70%; left: 70%; transform: translate(-50%, -50%);">
+    babu time se paani pi liyaa kro mujhe fikr hoti hai.
+</div>
+
+<div class="draggable" id="message4" draggable="true" style="top: 80%; left: 80%; transform: translate(-50%, -50%);">
+    ok babu mai laterine jara 4.
+</div>
+
+<script>
+    // Get all elements with class 'draggable'
+    const draggableElements = document.querySelectorAll('.draggable');
+
+    // Loop through each draggable element
+    draggableElements.forEach(element => {
+        // Add event listeners for drag events
+        element.addEventListener('dragstart', dragStart);
+        element.addEventListener('dragend', dragEnd);
+    });
+
+    function dragStart(event) {
+        // Store the ID of the dragged element
+        event.dataTransfer.setData('text/plain', event.target.id);
+        // Change cursor style
+        event.target.style.cursor = 'grabbing';
+    }
+
+    function dragEnd(event) {
+        // Reset cursor style
+        event.target.style.cursor = 'grab';
+    }
+
+    // Add event listener to the document for drop events
+    document.addEventListener('drop', drop);
+    document.addEventListener('dragover', allowDrop);
+
+    function drop(event) {
+        event.preventDefault();
+        // Get the ID of the dragged element
+        const id = event.dataTransfer.getData('text/plain');
+        // Get the dragged element
+        const draggableElement = document.getElementById(id);
+        // Calculate new position based on drop coordinates
+        draggableElement.style.left = (event.clientX - draggableElement.offsetWidth / 2) + 'px';
+        draggableElement.style.top = (event.clientY - draggableElement.offsetHeight / 2) + 'px';
+    }
+
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+</script>
+
+</body>
+</html>
+
